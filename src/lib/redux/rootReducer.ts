@@ -1,5 +1,11 @@
 import { combineReducers } from "redux"
+import { userReducer } from "./userReducer"
 
-const rootReducer = combineReducers([])
+export interface RootReducerType {
+	user: typeof userReducer
+}
+const rootReducer = combineReducers({
+	user: userReducer
+})
 
 export default rootReducer
