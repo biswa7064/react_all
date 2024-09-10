@@ -6,8 +6,27 @@ export const userAction = {
 	FETCH_USERS_FAILURE: "FETCH_USERS_FAILURE"
 } as const
 
+export interface UserType {
+	address: {
+		geolocation: any
+		city: string
+		street: string
+		number: number
+		zipcode: string
+	}
+	email: string
+	id: number
+	name: {
+		firstname: string
+		lastname: string
+	}
+	password: string
+	phone: string
+	username: string
+}
+
 export interface UserState {
-	users: any[]
+	users: UserType[]
 	loading: boolean
 	error?: Error
 }
