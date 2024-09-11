@@ -1,3 +1,1 @@
-const value = {}
-
-export default value
+module.exports = {}

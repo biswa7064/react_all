@@ -19,7 +19,7 @@ export type UserGeneratorType = Generator<
 	void
 >
 // create saga to fetch user lists from API
-function* fetchUserLists(): UserGeneratorType {
+export function* fetchUserLists(): UserGeneratorType {
 	try {
 		// call: for async call
 		const callRes = yield call(getUsers)

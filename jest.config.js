@@ -11,7 +11,8 @@ const customJestConfig = {
 	testEnvironment: "jest-environment-jsdom",
 	moduleNameMapper: {
 		// Handle module aliases (if you're using them in your Next.js project)
-		"^@/(.*)$": "<rootDir>/src/$1"
+		"^@/(.*)$": "<rootDir>/src/$1",
+		"\\.(css|jpg|png)$": "<rootDir>/empty-module.js"
 	},
 	transform: {
 		// Use babel-jest to transpile tests with the next/babel preset
