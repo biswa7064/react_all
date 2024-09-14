@@ -1,4 +1,5 @@
 "use client"
+import FeedbackButton from "@/components/core/FeedBackWithButton"
 import LoadingUI from "@/components/core/LoadingUI"
 import store, { useAppDispatch, useAppSelector } from "@/lib/redux"
 import { useEffect } from "react"
@@ -24,6 +25,7 @@ function Home() {
 					React All Features&nbsp;
 					<code className="font-mono font-bold">ReactApp</code>
 				</p>
+				<FeedbackButton />
 			</div>
 			{loading ? (
 				<LoadingUI isLoading={loading} />
