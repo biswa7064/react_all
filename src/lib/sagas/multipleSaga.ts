@@ -16,7 +16,7 @@ import {
 export type GetProductGeneratorType = Generator<
 	AllEffect<CallEffect<ProductType[] | any[]>> | PutEffect<any>
 >
-function* fetchProductCartSaga(): GetProductGeneratorType {
+export function* fetchProductCartSaga(): GetProductGeneratorType {
 	try {
 		// multiple API call
 		const [products, cartData] = yield all([call(getProducts), call(getCart)])

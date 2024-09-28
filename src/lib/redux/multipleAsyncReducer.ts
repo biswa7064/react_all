@@ -18,10 +18,12 @@ const cartProductState: CartProductStateType = {
 	productsDetails: { products: [], cartData: [] },
 	error_products: undefined
 }
-
+export type MultipleActionType<PT> = Action<keyof typeof multipleApiAction> & {
+	payload?: PT
+}
 export const multipleAsyncReducer = (
 	state: CartProductStateType = cartProductState,
-	action: Action<keyof typeof multipleApiAction> & { payload?: any }
+	action: MultipleActionType<any>
 ) => {
 	switch (action.type) {
 		case "START_OPERATION_PRODUCTS":
