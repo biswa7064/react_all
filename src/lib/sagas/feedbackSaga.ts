@@ -48,6 +48,7 @@ function* feedbackSaga(): Generator<any> {
 
 		// Wait for either operation to complete or cancellation
 		const { cancel: cancelled } = yield race({
+			// join the forked operation and check if cancel is happened in between
 			completion: join(operationTask),
 			cancel: take(CANCEL_OPERATION)
 		})

@@ -1,9 +1,8 @@
 "use client"
 import FeedbackButton from "@/components/core/FeedBackWithButton"
 import LoadingUI from "@/components/core/LoadingUI"
-import store, { useAppDispatch, useAppSelector } from "@/lib/redux"
+import { useAppDispatch, useAppSelector } from "@/lib/redux"
 import { useEffect } from "react"
-import { Provider } from "react-redux"
 
 function Home() {
 	const { loading, users } = useAppSelector((state) => state.user)
@@ -54,12 +53,4 @@ function Home() {
 	)
 }
 
-export default function RootHome() {
-	return (
-		<>
-			<Provider store={store}>
-				<Home />
-			</Provider>
-		</>
-	)
-}
+export default Home
