@@ -42,12 +42,12 @@ export const multipleAsyncReducer = (
 					products: action.payload.products,
 					cartData: action.payload.cartData
 				},
-				error_products: null
+				error_products: undefined
 			}
 		case "OPERATION_FAILURE_PRODUCTS":
 			return {
 				...state,
-				isLoading_products: true,
+				isLoading_products: false,
 				productsDetails: { products: [], cartData: [] },
 				error_products: action.payload
 			}

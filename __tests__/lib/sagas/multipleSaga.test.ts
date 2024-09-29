@@ -45,12 +45,8 @@ const mockCartResponseFromApi = [
 		]
 	}
 ]
-const mockUserServiceGet = jest.fn()
-jest.mock("@/services/user", () => ({
-	getUsers: () => mockUserServiceGet
-}))
 
-describe("userSaga", () => {
+describe("multipleSaga", () => {
 	let action: MultipleActionType<any>
 	let generator: Generator
 	let takeLatestGenerator: Generator
