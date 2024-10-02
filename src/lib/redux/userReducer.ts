@@ -1,4 +1,4 @@
-import { Action, Reducer } from "redux"
+import { Action } from "redux"
 
 export const userAction = {
 	FETCH_USERS_REQUEST: "FETCH_USERS_REQUEST",
@@ -41,9 +41,9 @@ export type UserActionType<PT> = Action<keyof typeof userAction> & {
 	payload?: PT
 }
 
-export const userReducer: Reducer<UserState, UserActionType<any>> = (
-	state = initialState,
-	action
+export const userReducer = (
+	state: UserState = initialState,
+	action: UserActionType<any>
 ) => {
 	switch (action.type) {
 		case "FETCH_USERS_REQUEST":

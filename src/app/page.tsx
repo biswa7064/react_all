@@ -2,10 +2,14 @@
 import FeedbackButton from "@/components/core/FeedBackWithButton"
 import LoadingUI from "@/components/core/LoadingUI"
 import { useAppDispatch, useAppSelector } from "@/lib/redux"
+import { FeedbackStateType } from "@/lib/redux/feedbackReducer"
+import { UserState } from "@/lib/redux/userReducer"
 import { useEffect } from "react"
 
 function Home() {
-	const { loading, users } = useAppSelector((state) => state.user)
+	const { loading, users } = useAppSelector<UserState>((state) => state.user)
+	const { isLoading: isLoadingFeedback, message } =
+		useAppSelector<FeedbackStateType>((state) => state.feedback)
 	const dispatch = useAppDispatch()
 	useEffect(() => {
 		let isMount = true
@@ -15,10 +19,13 @@ function Home() {
 		}
 	}, [dispatch])
 
-	console.log({ users })
+	console.log({ users, loading, isLoadingFeedback, message })
 
 	return (
-		<main className="flex min-h-screen flex-col items-center p-2">
+		<main
+			className="flex min-h-screen flex-col items-center p-2"
+			data-testid="home-container"
+		>
 			<div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
 				<p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
 					React All Features&nbsp;

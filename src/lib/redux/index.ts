@@ -1,7 +1,7 @@
-import { applyMiddleware, createStore } from "redux"
+import { applyMiddleware, createStore, Store } from "redux"
 import rootSaga from "../sagas"
 import createSagaMiddleware from "redux-saga"
-import rootReducer from "./rootReducer"
+import rootReducer, { RootReducerType } from "./rootReducer"
 import {
 	TypedUseSelectorHook,
 	useDispatch,
@@ -9,7 +9,10 @@ import {
 	useStore
 } from "react-redux"
 const sagaMiddleware = createSagaMiddleware()
-const store = createStore(rootReducer, applyMiddleware(sagaMiddleware))
+const store: Store<Partial<RootReducerType>, any> = createStore(
+	rootReducer,
+	applyMiddleware(sagaMiddleware)
+)
 
 sagaMiddleware.run(rootSaga)
 export interface StoreType {
@@ -20,8 +23,8 @@ export interface StoreType {
 }
 
 export const useAppDispatch: () => StoreType["AppDispatch"] = useDispatch
-export const useAppSelector: TypedUseSelectorHook<
-	StoreType["RootReducerType"]
-> = useSelector
+export const useAppSelector: TypedUseSelectorHook<{
+	[K in keyof StoreType["RootReducerType"]]-?: StoreType["RootReducerType"][K]
+}> = useSelector
 export const useAppStore: () => StoreType["AppStore"] = useStore
 export default store

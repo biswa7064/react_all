@@ -8,7 +8,7 @@ export const feedBackAction = {
 	OPERATION_CANCELLED: "OPERATION_CANCELLED"
 } as const
 
-interface FeedbackStateType {
+export interface FeedbackStateType {
 	isLoading: boolean
 	message: string
 	error?: string
