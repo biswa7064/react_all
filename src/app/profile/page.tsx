@@ -1,11 +1,11 @@
-import HomeWithAuth from "@/components/core/Home"
+import Profile from "@/components/Profile"
 import React from "react"
 
 const page = () => {
 	return (
-		<>
-			<HomeWithAuth />
-		</>
+		<div>
+			<Profile />
+		</div>
 	)
 }
 
