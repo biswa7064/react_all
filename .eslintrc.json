@@ -1,3 +1,27 @@
 {
-  "extends": "next/core-web-vitals"
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"project": "./tsconfig.json",
+		"sourceType": "module"
+	},
+	"plugins": ["@typescript-eslint", "unused-imports"],
+	"extends": [
+		"next/core-web-vitals",
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended"
+	],
+	"rules": {
+		"@typescript-eslint/no-unused-vars": "off", // Turn off the base rule
+		"unused-imports/no-unused-imports-ts": "error", // Automatically removes unused imports
+		"unused-imports/no-unused-vars-ts": [
+			"warn",
+			{
+				"vars": "all",
+				"varsIgnorePattern": "^_",
+				"args": "after-used",
+				"argsIgnorePattern": "^_"
+			}
+		]
+	},
+	"ignorePatterns": ["node_modules", "dist", "build", "coverage", ".next"]
 }
