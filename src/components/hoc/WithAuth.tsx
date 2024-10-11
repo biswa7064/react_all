@@ -2,6 +2,7 @@
 import { useAuthContext } from "@/context/AuthContext"
 import { UserRoles } from "@/utils/constants"
 import React, { FC } from "react"
+import AccessDenied from "../shared/AccessDenied"
 
 const WithAuth =
 	(roles: Array<keyof typeof UserRoles>) => (WrappedComponent: FC) => {
@@ -12,7 +13,7 @@ const WithAuth =
 			return (
 				<>
 					{!user?.isAuthenticated || !roles.includes(user?.role) ? (
-						<h1> Access Denied</h1>
+						<AccessDenied />
 					) : (
 						<WrappedComponent {...props} />
 					)}

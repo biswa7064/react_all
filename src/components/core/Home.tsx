@@ -1,10 +1,8 @@
 "use client"
 import WithAuth from "@/components/hoc/WithAuth"
-import { useAuthContext } from "@/context/AuthContext"
 import Image from "next/image"
 
 function Home() {
-	const { login, logout } = useAuthContext()
 	return (
 		<main className="flex min-h-screen flex-col items-center justify-between p-24">
 			<div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
@@ -111,29 +109,6 @@ function Home() {
 						Instantly deploy your Next.js site to a shareable URL with Vercel.
 					</p>
 				</a>
-			</div>
-			<div className="mb-32 grid lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-3 lg:text-left gap-5">
-				<button
-					type="button"
-					onClick={() => login("admin")}
-					className="bg-slate-500 py-3 rounded-md"
-				>
-					Login as Admin
-				</button>
-				<button
-					type="button"
-					onClick={() => login("user")}
-					className="bg-slate-500 py-3 rounded-md"
-				>
-					Login as User
-				</button>
-				<button
-					type="button"
-					onClick={() => logout()}
-					className="bg-red-500 py-3 rounded-md"
-				>
-					Logout
-				</button>
 			</div>
 		</main>
 	)
