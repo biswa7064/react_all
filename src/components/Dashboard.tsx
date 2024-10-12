@@ -3,7 +3,7 @@ import React from "react"
 import WithAuth from "./hoc/WithAuth"
 
 const Dashboard = () => {
-	return <div>Dashboard</div>
+	return <div data-testid="dashboard-root">Dashboard</div>
 }
 
 export default WithAuth(["admin"])(Dashboard)

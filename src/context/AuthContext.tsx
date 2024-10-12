@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 "use client"
 import { UserRoles } from "@/utils/constants"
 import {
@@ -56,14 +57,15 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
 		const userFromStorage = JSON.parse(
 			localStorage.getItem("user") ?? JSON.stringify({})
 		)
-		isMount &&
+		if (isMount) {
 			setUser((pre) => ({
 				...pre,
 				role: userFromStorage?.role ?? user?.role,
 				isAuthenticated:
 					userFromStorage?.isAuthenticated ?? user?.isAuthenticated
 			}))
-		isMount && setUserLoading(false)
+			setUserLoading(false)
+		}
 		return () => {
 			isMount = false
 		}

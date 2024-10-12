@@ -8,7 +8,7 @@ const WithAuth =
 	(roles: Array<keyof typeof UserRoles>) => (WrappedComponent: FC) => {
 		const UpdatedComponent = (props: any) => {
 			const { user, userLoading } = useAuthContext()
-			console.log({ user })
+			console.log({ user, userLoading })
 			if (userLoading) return <h1> Loading...</h1>
 			return (
 				<>

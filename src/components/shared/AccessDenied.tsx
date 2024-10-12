@@ -1,4 +1,3 @@
-import Link from "next/link"
 import { XCircle } from "lucide-react"
 import { usePathname } from "next/navigation"
 import { redirectToLogin } from "@/utils/auth"
@@ -6,7 +5,10 @@ import { redirectToLogin } from "@/utils/auth"
 export default function AccessDenied() {
 	const pathName = usePathname()
 	return (
-		<div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8">
+		<div
+			className="min-h-screen bg-gray-100 flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8"
+			data-testid="denied-root"
+		>
 			<div className="max-w-md w-full space-y-8">
 				<div className="text-center">
 					<XCircle className="mx-auto h-16 w-16 text-red-600" />
