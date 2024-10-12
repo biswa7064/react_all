@@ -17,7 +17,7 @@ module.exports = {
 				argsIgnorePattern: "^_"
 			}
 		],
-		"@typescript-eslint/no-explicit-any": "error",
+		"@typescript-eslint/no-explicit-any": "warn",
 		"unused-imports/no-unused-imports": "error",
 		"unused-imports/no-unused-vars": [
 			"warn",
