@@ -3,7 +3,7 @@ import React from "react"
 import WithAuth from "./hoc/WithAuth"
 
 const Profile = () => {
-	return <div>Profile</div>
+	return <div data-testid="profile-root">Profile</div>
 }
 
-export default WithAuth(["admin", "user"])(Profile)
+export default WithAuth(["user"])(Profile)

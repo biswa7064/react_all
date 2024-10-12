@@ -4,6 +4,7 @@ import { redirectToLogin } from "@/utils/auth"
 
 export default function AccessDenied() {
 	const pathName = usePathname()
+	console.log({ pathName })
 	return (
 		<div
 			className="min-h-screen bg-gray-100 flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8"
