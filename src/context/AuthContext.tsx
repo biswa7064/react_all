@@ -21,13 +21,16 @@ export interface UseAuthType {
 	logout: () => void
 	userLoading: boolean
 }
+const throwError = (): never => {
+	throw new Error("useAuthContext must be used within an AuthProvider")
+}
 const defaultValue: UseAuthType = {
 	user: {
 		role: "guest",
 		isAuthenticated: true
 	},
-	login: () => {},
-	logout: () => {},
+	login: throwError,
+	logout: throwError,
 	userLoading: true
 }
 export const AuthContext = createContext(defaultValue)
@@ -77,4 +80,10 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
-export const useAuthContext = () => useContext(AuthContext)
+export const useAuthContext = () => {
+	const context = useContext(AuthContext)
+	if (context.login === throwError) {
+		throwError()
+	}
+	return context
+}
