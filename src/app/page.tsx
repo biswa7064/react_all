@@ -1,5 +1,4 @@
 "use client"
-import { SessionWarningPopup } from "@/components"
 import { Button } from "@/components/core/Button"
 import { useAuth } from "@/context"
 import { useSessionTimeout } from "@/hooks"
@@ -7,22 +6,11 @@ import React from "react"
 
 export default function Component() {
 	const { isAuthenticated, login, logout } = useAuth()
-	const { showWarning, timeRemaining, resetTimer, setShowWarning } =
-		useSessionTimeout()
-
-	console.log({
-		showWarning,
-		timeRemaining,
-		isAuthenticated
-	})
+	const { resetTimer } = useSessionTimeout()
 
 	const handleStayLoggedIn = () => {
 		login()
 		resetTimer()
-	}
-
-	const handleLogout = () => {
-		logout()
 	}
 
 	if (!isAuthenticated) {
@@ -43,20 +31,6 @@ export default function Component() {
 			</h1>
 			<p className="mb-4 text-gray-300">You are logged in.</p>
 			<Button onClick={logout}>Logout</Button>
-
-			{showWarning && (
-				<SessionWarningPopup
-					timeRemaining={timeRemaining}
-					onStayLoggedIn={() => {
-						handleStayLoggedIn()
-						setShowWarning(false)
-					}}
-					onLogout={() => {
-						handleLogout()
-						setShowWarning(false)
-					}}
-				/>
-			)}
 		</div>
 	)
 }
