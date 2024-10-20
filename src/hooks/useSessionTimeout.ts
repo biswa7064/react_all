@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef, useMemo } from "react"
 
 const SESSION_TIMEOUT = 2 * 60 * 1000 // 5 minutes
 const WARNING_TIME = 60 * 1000 // 1 minute
+const UPDATE_INTERVAL = 1000
 const userEvents = ["mousemove", "keydown", "click"]
 
 const useSessionTimeout = () => {
@@ -12,28 +13,54 @@ const useSessionTimeout = () => {
 	const [timeRemaining, setTimeRemaining] = useState(SESSION_TIMEOUT)
 	const lastActivityRef = useRef(Date.now())
 	const timerRef = useRef<number | null>(null)
+	const warningTimeoutRef = useRef<number | null>(null)
+	const sessionTimeoutRef = useRef<number | null>(null)
+
+	const clearTimers = () => {
+		if (warningTimeoutRef.current) {
+			clearTimeout(warningTimeoutRef.current)
+		}
+		if (sessionTimeoutRef.current) {
+			clearTimeout(sessionTimeoutRef.current)
+		}
+		timerRef.current && clearInterval(timerRef.current)
+	}
 
 	const resetTimer = useCallback(() => {
 		lastActivityRef.current = Date.now()
 		setShowWarning(false)
 		setTimeRemaining(SESSION_TIMEOUT)
-		timerRef.current && clearInterval(timerRef.current)
-		timerRef.current = window.setInterval(() => {
-			const now = Date.now()
-			const timeSinceLastActivity = now - lastActivityRef.current
-			const remainingTime = SESSION_TIMEOUT - timeSinceLastActivity
+		clearTimers()
+		warningTimeoutRef.current = window.setTimeout(() => {
+			!showWarning && setShowWarning(true)
+		}, SESSION_TIMEOUT - WARNING_TIME)
+		sessionTimeoutRef.current = window.setTimeout(() => {
+			setTimeRemaining(0)
+			clearTimers() // Clear both timers when the session expires
+		}, SESSION_TIMEOUT)
+	}, [showWarning])
 
-			if (remainingTime <= 0) {
-				timerRef.current && clearInterval(timerRef.current)
-				setTimeRemaining(0)
-			} else {
-				setTimeRemaining(remainingTime)
-			}
+	useEffect(() => {
+		let isMount = true
+		if (showWarning && isMount) {
+			timerRef.current && clearInterval(timerRef.current)
+			timerRef.current = window.setInterval(() => {
+				const now = Date.now()
+				const timeSinceLastActivity = now - lastActivityRef.current
+				const remainingTime = SESSION_TIMEOUT - timeSinceLastActivity
 
-			if (!showWarning && remainingTime <= WARNING_TIME) {
-				setShowWarning(true)
-			}
-		}, 1000)
+				if (remainingTime <= 0) {
+					setTimeRemaining(0)
+					clearTimers()
+				} else {
+					setTimeRemaining(remainingTime)
+				}
+			}, UPDATE_INTERVAL)
+		}
+		return () => {
+			timerRef.current && clearInterval(timerRef.current)
+			isMount = false
+		}
 	}, [showWarning])
 
 	useEffect(() => {
@@ -41,7 +68,7 @@ const useSessionTimeout = () => {
 		const handleActivity = () => {
 			resetTimer()
 		}
-		if (isAuthenticated && !showWarning && isMount) {
+		if (isMount && isAuthenticated && !showWarning) {
 			userEvents.forEach((event) => {
 				window.addEventListener(event, handleActivity)
 			})
@@ -59,9 +86,6 @@ const useSessionTimeout = () => {
 	}, [timeRemaining, showWarning])
 	useEffect(() => {
 		let isMount = true
-		if (!isAuthenticated) {
-			isMount && setShowWarning(false)
-		}
 		if (isAuthenticated && isTimeToShowWarning) {
 			isMount && setShowWarning(true)
 		}
@@ -71,10 +95,11 @@ const useSessionTimeout = () => {
 	}, [timeRemaining, isTimeToShowWarning, isAuthenticated])
 
 	useEffect(() => {
-		if (!isAuthenticated && timerRef.current) {
-			clearInterval(timerRef.current)
+		if (!isAuthenticated) {
+			setShowWarning(false)
+			clearTimers()
 		}
-	}, [isAuthenticated, timerRef])
+	}, [isAuthenticated])
 
 	return {
 		showWarning,
