@@ -1,8 +1,8 @@
 "use client"
 import { useAuth } from "@/context"
-import { useState, useEffect, useCallback, useRef, useMemo } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 
-const SESSION_TIMEOUT = 2 * 60 * 1000 // 5 minutes
+const SESSION_TIMEOUT = 3 * 60 * 1000 // 3 minutes
 const WARNING_TIME = 60 * 1000 // 1 minute
 const UPDATE_INTERVAL = 1000
 const userEvents = ["mousemove", "keydown", "click"]
@@ -33,11 +33,11 @@ const useSessionTimeout = () => {
 		clearTimers()
 		warningTimeoutRef.current = window.setTimeout(() => {
 			!showWarning && setShowWarning(true)
-		}, SESSION_TIMEOUT - WARNING_TIME)
+		}, SESSION_TIMEOUT - WARNING_TIME) // run showWarning after certain time period
 		sessionTimeoutRef.current = window.setTimeout(() => {
 			setTimeRemaining(0)
 			clearTimers() // Clear both timers when the session expires
-		}, SESSION_TIMEOUT)
+		}, SESSION_TIMEOUT) // run clear timeout and set remaining time to 0 after session expired
 	}, [showWarning])
 
 	useEffect(() => {
@@ -48,7 +48,6 @@ const useSessionTimeout = () => {
 				const now = Date.now()
 				const timeSinceLastActivity = now - lastActivityRef.current
 				const remainingTime = SESSION_TIMEOUT - timeSinceLastActivity
-
 				if (remainingTime <= 0) {
 					setTimeRemaining(0)
 					clearTimers()
@@ -80,19 +79,6 @@ const useSessionTimeout = () => {
 			isMount = false
 		}
 	}, [resetTimer, showWarning, isAuthenticated])
-
-	const isTimeToShowWarning = useMemo(() => {
-		return timeRemaining <= WARNING_TIME && !showWarning
-	}, [timeRemaining, showWarning])
-	useEffect(() => {
-		let isMount = true
-		if (isAuthenticated && isTimeToShowWarning) {
-			isMount && setShowWarning(true)
-		}
-		return () => {
-			isMount = false
-		}
-	}, [timeRemaining, isTimeToShowWarning, isAuthenticated])
 
 	useEffect(() => {
 		if (!isAuthenticated) {
