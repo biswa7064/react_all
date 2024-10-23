@@ -2,9 +2,11 @@
 import { Button } from "@/components/core/Button"
 import { useAuth } from "@/context"
 import { useSessionTimeout } from "@/hooks"
+import { useRouter } from "next/navigation"
 import React from "react"
 
 export default function Component() {
+	const { push } = useRouter()
 	const { isAuthenticated, login, logout } = useAuth()
 	const { resetTimer } = useSessionTimeout()
 
@@ -30,7 +32,10 @@ export default function Component() {
 				Welcome to the Dashboard
 			</h1>
 			<p className="mb-4 text-gray-300">You are logged in.</p>
-			<Button onClick={logout}>Logout</Button>
+			<div className="flex gap-4">
+				<Button onClick={logout}>Logout</Button>
+				<Button onClick={() => push("/profile")}>Goto Profile</Button>
+			</div>
 		</div>
 	)
 }

@@ -3,6 +3,7 @@ import { useSessionTimeout } from "@/hooks"
 import React, { FC, ReactNode } from "react"
 import SessionWarningPopup from "./SessionWarningPopup"
 import { useAuth } from "@/context"
+import { redirectToPage } from "@/utils/redirect"
 
 const SessionManagementComponent: FC<{ children: ReactNode }> = ({
 	children
@@ -13,24 +14,21 @@ const SessionManagementComponent: FC<{ children: ReactNode }> = ({
 	const handleStayLoggedIn = () => {
 		login()
 		resetTimer()
+		setShowWarning(false)
 	}
 
 	const handleLogout = () => {
 		logout()
+		setShowWarning(false)
+		redirectToPage()
 	}
 	return (
 		<>
 			{showWarning && (
 				<SessionWarningPopup
 					timeRemaining={timeRemaining}
-					onStayLoggedIn={() => {
-						handleStayLoggedIn()
-						setShowWarning(false)
-					}}
-					onLogout={() => {
-						handleLogout()
-						setShowWarning(false)
-					}}
+					onStayLoggedIn={() => handleStayLoggedIn()}
+					onLogout={() => handleLogout()}
 				/>
 			)}
 			{children}
