@@ -2,10 +2,10 @@
 import { useAuth } from "@/context"
 import { useState, useEffect, useCallback, useRef } from "react"
 
-const SESSION_TIMEOUT = 3 * 60 * 1000 // 3 minutes
-const WARNING_TIME = 60 * 1000 // 1 minute
-const UPDATE_INTERVAL = 1000
-const userEvents = ["mousemove", "keydown", "click"]
+export const SESSION_TIMEOUT = 3 * 60 * 1000 // 3 minutes
+export const WARNING_TIME = 60 * 1000 // 1 minute
+export const UPDATE_INTERVAL = 1000
+export const userEvents = ["mousemove", "keydown", "click"]
 
 const useSessionTimeout = () => {
 	const { isAuthenticated } = useAuth()
