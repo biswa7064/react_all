@@ -119,7 +119,9 @@ describe("useSessionTimeout hook", () => {
 			.spyOn(React, "useRef")
 			.mockImplementation(() => ({ current: setInterval(() => true, 1000) }))
 		const { unmount } = renderHook(() => useSessionTimeout())
-		fireEvent(window, new Event(userEvents[0]))
+		act(() => {
+			fireEvent(window, new Event(userEvents[0]))
+		})
 		expect(addEventSpy).toHaveBeenCalledWith(
 			userEvents[0],
 			expect.any(Function)
