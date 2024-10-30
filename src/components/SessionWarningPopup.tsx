@@ -37,7 +37,7 @@ export default function SessionWarningPopup({
 							formattedTime ? "justify-end" : "justify-start"
 						}`}
 					>
-						<AlertDialog.Cancel asChild>
+						<AlertDialog.Cancel asChild data-testid="alert-cancel-btn-root">
 							<button
 								onClick={onLogout}
 								className={
@@ -48,7 +48,7 @@ export default function SessionWarningPopup({
 							</button>
 						</AlertDialog.Cancel>
 						{formattedTime && (
-							<AlertDialog.Action asChild>
+							<AlertDialog.Action asChild data-testid="alert-action-btn-root">
 								<button
 									onClick={onStayLoggedIn}
 									className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
