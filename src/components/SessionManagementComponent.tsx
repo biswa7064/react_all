@@ -23,7 +23,7 @@ const SessionManagementComponent: FC<{ children: ReactNode }> = ({
 		redirectToPage()
 	}
 	return (
-		<>
+		<div data-testid="session-management-comp-root">
 			{showWarning && (
 				<SessionWarningPopup
 					timeRemaining={timeRemaining}
@@ -32,7 +32,7 @@ const SessionManagementComponent: FC<{ children: ReactNode }> = ({
 				/>
 			)}
 			{children}
-		</>
+		</div>
 	)
 }
 
