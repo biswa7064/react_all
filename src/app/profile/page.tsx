@@ -4,7 +4,10 @@ import png1 from "../../assets/biswa7064.png"
 
 const page = () => {
 	return (
-		<div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+		<div
+			className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8"
+			data-testid="profile-page-root"
+		>
 			<div className="max-w-3xl mx-auto bg-white shadow-md rounded-lg overflow-hidden">
 				<div className="md:flex">
 					<div className="md:flex-shrink-0 h-48 p-1 overflow-y-hidden">
