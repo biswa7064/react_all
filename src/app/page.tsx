@@ -17,24 +17,39 @@ export default function Component() {
 
 	if (!isAuthenticated) {
 		return (
-			<div className="flex  flex-col items-center justify-center h-screen">
+			<div
+				className="flex  flex-col items-center justify-center h-screen"
+				data-testid="unauth-home-page-root"
+			>
 				<h1 className="text-2xl font-bold mb-4 !text-gray-300">
 					Welcome, Please Login to the Dashboard
 				</h1>
-				<Button onClick={() => handleStayLoggedIn()}>Login</Button>
+				<Button
+					onClick={() => handleStayLoggedIn()}
+					data-testid="stay-login-btn"
+				>
+					Login
+				</Button>
 			</div>
 		)
 	}
 
 	return (
-		<div className="flex flex-col items-center justify-center h-screen text-gray-300 w-full">
+		<div
+			className="flex flex-col items-center justify-center h-screen text-gray-300 w-full"
+			data-testid="home-page-root"
+		>
 			<h1 className="text-2xl font-bold mb-4 !text-gray-300">
 				Welcome to the Dashboard
 			</h1>
 			<p className="mb-4 text-gray-300">You are logged in.</p>
 			<div className="flex gap-4">
-				<Button onClick={logout}>Logout</Button>
-				<Button onClick={() => push("/profile")}>Goto Profile</Button>
+				<Button onClick={logout} data-testid="logout-btn">
+					Logout
+				</Button>
+				<Button onClick={() => push("/profile")} data-testid="push-profile-btn">
+					Goto Profile
+				</Button>
 			</div>
 		</div>
 	)
