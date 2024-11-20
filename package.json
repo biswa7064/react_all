@@ -4,12 +4,14 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
+		"prebuild": "webpack --mode development",
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
 		"lint:fix": "next lint --fix",
 		"format": "prettier --write .",
-		"test:unit": "jest --coverage"
+		"test:unit": "jest --coverage",
+		"webpack:build": "webpack"
 	},
 	"dependencies": {
 		"next": "14.2.7",
@@ -17,6 +19,9 @@
 		"react-dom": "^18"
 	},
 	"devDependencies": {
+		"@babel/core": "^7.26.0",
+		"@babel/preset-env": "^7.26.0",
+		"@babel/preset-react": "^7.25.9",
 		"@testing-library/dom": "^10.4.0",
 		"@testing-library/jest-dom": "^6.5.0",
 		"@testing-library/react": "^16.0.1",
@@ -27,6 +32,7 @@
 		"@types/react-dom": "^18",
 		"@typescript-eslint/eslint-plugin": "^5.59.0",
 		"@typescript-eslint/parser": "^5.59.0",
+		"babel-loader": "^9.2.1",
 		"eslint": "^8.38.0",
 		"eslint-config-next": "^13.3.0",
 		"eslint-config-prettier": "^8.8.0",
@@ -37,6 +43,9 @@
 		"prettier": "^2.8.7",
 		"tailwindcss": "^3.4.1",
 		"ts-jest": "^29.2.5",
-		"typescript": "^5.0.4"
+		"typescript": "^5.0.4",
+		"webpack": "^5.96.1",
+		"webpack-cli": "^5.1.4",
+		"webpack-dev-server": "^5.1.0"
 	}
 }
