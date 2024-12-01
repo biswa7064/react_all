@@ -11,7 +11,9 @@
 		"lint:fix": "next lint --fix",
 		"format": "prettier --write .",
 		"test:unit": "jest --coverage",
-		"webpack:build": "webpack"
+		"webpack:build": "webpack",
+		"start:webdevserver": "webpack-dev-server",
+		"build:stats": "webpack --json > stats.json"
 	},
 	"dependencies": {
 		"next": "14.2.7",
