@@ -4,7 +4,7 @@ module.exports = {
 	context: process.cwd(),
 	mode: "development",
 	entry: {
-		reactpath: ["react", "react-dom"]
+		vendor: ["react", "react-dom"]
 	},
 	output: {
 		filename: "[name].dll.js",
