@@ -1,4 +1,5 @@
 const path = require("path")
+const webpack = require("webpack")
 module.exports = {
 	entry: "./src/app/page.tsx",
 	mode: "development",
@@ -22,5 +23,11 @@ module.exports = {
 				}
 			}
 		]
-	}
+	},
+	plugins: [
+		new webpack.DllReferencePlugin({
+			context: process.cwd(),
+			manifest: require("./dist/reactpath.json")
+		})
+	]
 }

@@ -4,14 +4,14 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
-		"prebuild": "webpack --mode development",
+		"prebuild": "webpack --config webpack.config.js",
 		"build": "next build",
+		"prestart": "webpack --config webpack.library.config.js",
 		"start": "next start",
 		"lint": "next lint",
 		"lint:fix": "next lint --fix",
 		"format": "prettier --write .",
 		"test:unit": "jest --coverage",
-		"webpack:build": "webpack",
 		"start:webdevserver": "webpack-dev-server",
 		"build:stats": "webpack --json > stats.json"
 	},
