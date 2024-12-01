@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
-		"prebuild": "webpack --config webpack.config.js",
+		"prebuild": "webpack",
 		"build": "next build",
 		"prestart": "webpack --config webpack.library.config.js",
 		"start": "next start",
