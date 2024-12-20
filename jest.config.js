@@ -21,7 +21,8 @@ const customJestConfig = {
 	coveragePathIgnorePatterns: [
 		"<rootDir>/node_modules/",
 		"<rootDir>/.next/",
-		"<rootDir>/coverage/"
+		"<rootDir>/coverage/",
+		"<rootDir>/dist/"
 	],
 	testMatch: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"]
 }
