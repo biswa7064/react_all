@@ -1,7 +1,7 @@
 const path = require("path")
 const webpack = require("webpack")
 const UglifyJSWebpackPlugin = require("uglifyjs-webpack-plugin")
-module.exports = {
+const commonWebpack = {
 	entry: {
 		main: "./src/app/page.tsx",
 		layout: "./src/app/layout.tsx"
@@ -15,25 +15,35 @@ module.exports = {
 	},
 	output: {
 		path: path.resolve(__dirname, "dist"),
-		filename: "[name].bundle.js"
+		filename: "[name].[contenthash].js"
 	},
 	module: {
 		rules: [
 			{
 				test: /\.(ts|tsx|js|jsx)$/,
 				exclude: /node_modules/,
-				loader: "babel-loader",
-				options: {
-					presets: ["@babel/preset-react", "@babel/preset-typescript"]
-				}
+				use: "babel-loader"
 			},
 			{
-				test: /\.css$/, // Example for handling CSS
+				test: /\.(css|scss)$/, // Example for handling CSS
+				exclude: /node_modules/,
 				use: [
 					"style-loader", // Inject CSS into the DOM
 					"css-loader", // Interpret @import and url()
-					"postcss-loader" // Process with Tailwind and Autoprefixer
+					{
+						loader: "postcss-loader",
+						options: {
+							postcssOptions: {
+								plugins: [require("autoprefixer")]
+							}
+						}
+					} // Process with Tailwind and Autoprefixer
 				]
+			},
+			{
+				test: /.\.js$/,
+				include: /node_modules\/react-dom/,
+				loader: "babel-loader"
 			}
 		]
 	},
@@ -54,6 +64,19 @@ module.exports = {
 			// uglifyjs plugin to reduce size of bundles
 			// Cache property used to prevent downloading the same file again
 			new UglifyJSWebpackPlugin({ cache: true })
-		]
+		],
+		splitChunks: {
+			cacheGroups: {
+				vendor: {
+					test: /node_modules/,
+					chunks: "initial",
+					name: "vendor",
+					priority: 10,
+					enforce: true
+				}
+			}
+		}
 	}
 }
+
+module.exports = { ...commonWebpack }
