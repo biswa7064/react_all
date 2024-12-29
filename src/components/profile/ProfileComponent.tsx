@@ -3,14 +3,20 @@ import Image from "next/image"
 import Link from "next/link"
 
 interface ProfileComponentProps {
-	isLoading: boolean
 	user: any
-	isLoggedIn: boolean
+	isLoading?: boolean
+	isLoggedIn?: boolean
 	loggedInRoute?: string
 	loggedOutRoute?: string
 	isCustom?: boolean
 	customLogout?: () => void
 	customLogin?: () => void
+}
+// make all keys optional except user
+type PartialProfileComponentProps = Partial<
+	Omit<ProfileComponentProps, "user">
+> & {
+	user: ProfileComponentProps["user"]
 }
 export default function ProfileComponent({
 	isLoading,
@@ -21,7 +27,7 @@ export default function ProfileComponent({
 	isCustom = false,
 	customLogout,
 	customLogin
-}: ProfileComponentProps) {
+}: PartialProfileComponentProps) {
 	return (
 		<div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
 			{isLoading ? (
