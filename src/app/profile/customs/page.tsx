@@ -8,7 +8,7 @@ const routes = {
 	loggedIn: "/api/auth/custom_login",
 	loggedOut: "/api/auth/custom_logout"
 }
-export default function ProfilePage() {
+function ProfilePage() {
 	const router = useRouter()
 	const { user, isLoading } = useUser()
 	const isLoggedIn = useMemo(() => Boolean(user), [user])
@@ -26,3 +26,5 @@ export default function ProfilePage() {
 		/>
 	)
 }
+
+export default ProfilePage
