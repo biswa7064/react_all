@@ -16,14 +16,21 @@ export default function withRole(Component: NextPage, { role }: WithRoleProps) {
 		props: PT
 	): Promise<React.ReactNode> {
 		const session = (await getSession()) as UserSession
-		if (!session || !session?.user) {
+		if (!session || !session?.user || !session.user.sub) {
 			return <AccessDeniedComponent />
 		}
-		const response = await fetch(
-			`${process.env.AUTH0_BASE_URL}/api/role?userId=${session.user.sub}`
-		)
-		const roles = (await response.json()) || []
-		if (!roles.includes(role)) {
+		let roles: string[] | { error: string }
+		try {
+			roles = await fetch(
+				`${process.env.AUTH0_BASE_URL}/api/role?userId=${session.user.sub}`
+			).then((res) => res.json())
+		} catch (error) {
+			roles = []
+		}
+		if (
+			!(roles instanceof Array) ||
+			(roles instanceof Array && !roles.includes(role))
+		) {
 			return <AccessDeniedComponent />
 		}
 		return <Component {...props} />
