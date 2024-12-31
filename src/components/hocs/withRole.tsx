@@ -15,8 +15,8 @@ export interface UserSession extends Session {
 	}
 }
 export default function withRole(Component: NextPage, { role }: WithRoleProps) {
-	return async function RoleBasedComponent<PT extends Record<string, unknown>>(
-		props: PT
+	return async function RoleBasedComponent(
+		props: React.ComponentProps<typeof Component>
 	): Promise<React.ReactNode> {
 		const session = (await getSession()) as UserSession
 		if (!session || !session?.user || !session.user.sub) {

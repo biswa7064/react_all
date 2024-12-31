@@ -6,7 +6,9 @@ const routes = {
 	loggedIn: "/api/auth/login?returnTo=/profile"
 }
 export default function withAuth(Component: React.ComponentType) {
-	return function AuthComponent<PT extends Record<string, unknown>>(props: PT) {
+	return function AuthComponent<
+		PT extends React.ComponentProps<typeof Component>
+	>(props: PT) {
 		const { user, isLoading } = useUser()
 		const isUserFound = useMemo(
 			() => !isLoading && Boolean(user),
