@@ -2,6 +2,9 @@ import { getSession, Session } from "@auth0/nextjs-auth0"
 import { NextPage } from "next"
 import React from "react"
 import { AccessDeniedComponent } from "@/components/common"
+import getConfig from "next/config"
+
+const { publicRuntimeConfig } = getConfig()
 export interface WithRoleProps {
 	role: string
 }
@@ -22,7 +25,7 @@ export default function withRole(Component: NextPage, { role }: WithRoleProps) {
 		let roles: string[] | { error: string }
 		try {
 			roles = await fetch(
-				`${process.env.AUTH0_BASE_URL}/api/role?userId=${session.user.sub}`
+				`${publicRuntimeConfig.apiBaseUrl}/api/role?userId=${session.user.sub}`
 			).then((res) => res.json())
 		} catch (error) {
 			roles = []

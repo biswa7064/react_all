@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 
-export const GET = async (req: NextRequest) => {
+export async function GET(req: NextRequest) {
 	const res = new NextResponse()
 	const searchParams = req.nextUrl.searchParams
 	const userId = searchParams.get("userId")

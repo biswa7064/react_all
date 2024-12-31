@@ -2,6 +2,9 @@
 const validImageHosts = ["lh3.googleusercontent.com", "s.gravatar.com"]
 const nextConfig = {
 	reactStrictMode: true,
+	publicRuntimeConfig: {
+		apiBaseUrl: process.env.NEXT_BASE_URL
+	},
 	eslint: {
 		dirs: ["src", "app", "components", "lib", "utils"]
 	},
