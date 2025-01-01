@@ -3,6 +3,7 @@ import { NextPage } from "next"
 import React from "react"
 import { AccessDeniedComponent } from "@/components/common"
 import getConfig from "next/config"
+import { AxiosLib } from "@/lib/axios.lib"
 
 const { publicRuntimeConfig } = getConfig()
 export interface WithRoleProps {
@@ -14,25 +15,28 @@ export interface UserSession extends Session {
 		sub: string
 	}
 }
+const axiosLib = new AxiosLib()
 export default function withRole(Component: NextPage, { role }: WithRoleProps) {
 	return async function RoleBasedComponent(
 		props: React.ComponentProps<typeof Component>
 	): Promise<React.ReactNode> {
 		const session = (await getSession()) as UserSession
+
 		if (!session || !session?.user || !session.user.sub) {
 			return <AccessDeniedComponent />
 		}
 		let roles: string[] | { error: string }
 		try {
-			roles = await fetch(
+			const response = await axiosLib.get(
 				`${publicRuntimeConfig.apiBaseUrl}/api/role?userId=${session.user.sub}`
-			).then((res) => res.json())
+			)
+			roles = response?.data
 		} catch (error) {
 			roles = []
 		}
 		if (
-			!(roles instanceof Array) ||
-			(roles instanceof Array && !roles.includes(role))
+			!Array.isArray(roles) ||
+			(Array.isArray(roles) && !roles.includes(role))
 		) {
 			return <AccessDeniedComponent />
 		}

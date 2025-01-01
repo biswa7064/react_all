@@ -1,5 +1,7 @@
+import { AxiosLib } from "@/lib/axios.lib"
 import { NextRequest, NextResponse } from "next/server"
 
+const axiosLib = new AxiosLib(true)
 export async function GET(req: NextRequest) {
 	const res = new NextResponse()
 	const searchParams = req.nextUrl.searchParams
@@ -8,16 +10,11 @@ export async function GET(req: NextRequest) {
 		if (!userId) {
 			throw new Error("userId is required in request query")
 		}
-		const response = await fetch(
-			`${process.env.AUTH0_ISSUER_BASE_URL}/api/v2/users/${userId}/roles`,
-			{
-				headers: {
-					Authorization: `Bearer ${process.env.AUTH0_MANAGEMENT_API_TOKEN}`
-				}
-			}
+		const response = await axiosLib.get(
+			`${process.env.AUTH0_ISSUER_BASE_URL}/api/v2/users/${userId}/roles`
 		)
-		const user = (await response.json()) || []
-		const userRoles = user?.map((role: { name: string }) => role.name) || []
+		const userRoles =
+			(response?.data || [])?.map((role: { name: string }) => role.name) || []
 		return NextResponse.json(userRoles, res)
 	} catch (error) {
 		return NextResponse.json([], res)
