@@ -15,7 +15,7 @@ export interface UserSession extends Session {
 		sub: string
 	}
 }
-const axiosLib = new AxiosLib()
+const axiosLib = new AxiosLib(true)
 export default function withRole(Component: NextPage, { role }: WithRoleProps) {
 	return async function RoleBasedComponent(
 		props: React.ComponentProps<typeof Component>
@@ -29,6 +29,7 @@ export default function withRole(Component: NextPage, { role }: WithRoleProps) {
 		try {
 			const response = await axiosLib.get(
 				`${publicRuntimeConfig.apiBaseUrl}/api/role?userId=${session.user.sub}`
+				// `${publicRuntimeConfig.apiBaseUrl}/api/role/session`
 			)
 			roles = response?.data
 		} catch (error) {

@@ -1,4 +1,5 @@
 import { getAccessToken } from "@auth0/nextjs-auth0"
+import { NextRequest, NextResponse } from "next/server"
 
 export const getLocalStorageItem = (key: string) => {
 	if (typeof window !== "undefined") {
@@ -7,8 +8,12 @@ export const getLocalStorageItem = (key: string) => {
 	return null
 }
 
-export const getAuth0AccessToken = async () => {
-	const { accessToken } = await getAccessToken()
+export const getAuth0AccessToken = async (
+	req: NextRequest,
+	res: NextResponse,
+	config = {}
+) => {
+	const { accessToken } = await getAccessToken(req, res, config)
 	return accessToken ?? undefined
 }
 

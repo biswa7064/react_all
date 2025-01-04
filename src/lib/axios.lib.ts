@@ -1,3 +1,4 @@
+// import { getAuth0AccessToken, getLocalStorageItem } from "@/utils/localStorageUtil"
 import { getLocalStorageItem } from "@/utils/localStorageUtil"
 import axios, { Axios, AxiosHeaders, InternalAxiosRequestConfig } from "axios"
 
@@ -8,31 +9,13 @@ export const axiosInstance = axios.create({
 	}
 })
 
-export const createAxiosInterceptor = (
-	headerProperties: Record<string, unknown>
-) => {
-	axiosInstance.interceptors.request.use(
-		(config: InternalAxiosRequestConfig) => {
-			config.headers = <AxiosHeaders>{
-				...config.headers,
-				...headerProperties
-			}
-			return config
-		}
-	)
-	return axiosInstance
-}
-
 export class AxiosLib {
 	isAuthRequired: boolean
 	private newAxiosInstance: Axios
 	constructor(isAuthRequired = false) {
 		this.isAuthRequired = isAuthRequired
-		this.newAxiosInstance = isAuthRequired
-			? createAxiosInterceptor({
-					Authorization: getLocalStorageItem("accessToken") ||  `Bearer ${process.env.AUTH0_MANAGEMENT_API_TOKEN}`
-			  })
-			: axiosInstance
+		this.newAxiosInstance = axiosInstance
+		this.isAuthRequired && this.setInterceptor()
 	}
 	async get(url: string, config = {}) {
 		return this.newAxiosInstance.get(url, config)
@@ -48,5 +31,21 @@ export class AxiosLib {
 
 	async delete(url: string, config = {}) {
 		return this.newAxiosInstance.delete(url, config)
+	}
+
+	private async setInterceptor() {
+		this.newAxiosInstance.interceptors.request.use(
+			async (config: InternalAxiosRequestConfig) => {
+				if (this.isAuthRequired) {
+					config.headers = (<Record<string, unknown>>{
+						...config.headers,
+						Authorization:
+							getLocalStorageItem("accessToken") ??
+							`Bearer ${process.env.AUTH0_MANAGEMENT_API_TOKEN}`
+					}) as AxiosHeaders
+				}
+				return config
+			}
+		)
 	}
 }
