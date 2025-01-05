@@ -1,4 +1,5 @@
 import React from "react"
+import ProfileButton from "../home/ProfileButton"
 
 const AccessDeniedComponent = () => {
 	return (
@@ -6,6 +7,7 @@ const AccessDeniedComponent = () => {
 			<div className="flex flex-col items-center justify-center w-full h-screen text-red-600 text-xl">
 				<h1>Access Denied</h1>
 				<p>You must have the correct role to view this page</p>
+				<ProfileButton url="/" btnMsg="Go to Home" />
 			</div>
 		</div>
 	)
