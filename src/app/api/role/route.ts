@@ -1,4 +1,5 @@
 import { AxiosLib } from "@/lib/axios.lib"
+import { AxiosError } from "axios"
 import { NextRequest, NextResponse } from "next/server"
 
 const axiosLib = new AxiosLib(true)
@@ -16,7 +17,14 @@ export async function GET(req: NextRequest) {
 		const userRoles =
 			(response?.data || [])?.map((role: { name: string }) => role.name) || []
 		return NextResponse.json(userRoles, res)
-	} catch (error) {
+	} catch (caught) {
+		const error = caught as AxiosError
+		if (error?.status && error?.status === 401) {
+			return NextResponse.json(
+				{ error: JSON.stringify(error) },
+				{ status: 401 }
+			)
+		}
 		return NextResponse.json([], res)
 	}
 }

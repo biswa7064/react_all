@@ -4,6 +4,8 @@ import React from "react"
 import { AccessDeniedComponent } from "@/components/common"
 import getConfig from "next/config"
 import { AxiosLib } from "@/lib/axios.lib"
+import { AxiosError } from "axios"
+import { redirectToUrl } from "@/utils/redirectToUrl"
 
 const { publicRuntimeConfig } = getConfig()
 export interface WithRoleProps {
@@ -25,14 +27,17 @@ export default function withRole(Component: NextPage, { role }: WithRoleProps) {
 		if (!session || !session?.user || !session.user.sub) {
 			return <AccessDeniedComponent />
 		}
-		let roles: string[] | { error: string }
+		let roles: string[] | { error: string; status: number }
 		try {
 			const response = await axiosLib.get(
 				`${publicRuntimeConfig.apiBaseUrl}/api/role?userId=${session.user.sub}`
-				// `${publicRuntimeConfig.apiBaseUrl}/api/role/session`
 			)
 			roles = response?.data
 		} catch (error) {
+			if ((error as AxiosError)?.status) {
+				await redirectToUrl("/profile/unauth")
+				return
+			}
 			roles = []
 		}
 		if (
