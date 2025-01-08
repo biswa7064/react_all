@@ -15,7 +15,7 @@ export class AxiosLib {
 	constructor(isAuthRequired = false) {
 		this.isAuthRequired = isAuthRequired
 		this.newAxiosInstance = axiosInstance
-		this.isAuthRequired && this.setInterceptor()
+		this.setInterceptor()
 	}
 	async get(url: string, config = {}) {
 		return this.newAxiosInstance.get(url, config)
@@ -36,14 +36,13 @@ export class AxiosLib {
 	private async setInterceptor() {
 		this.newAxiosInstance.interceptors.request.use(
 			async (config: InternalAxiosRequestConfig) => {
-				if (this.isAuthRequired) {
-					config.headers = (<Record<string, unknown>>{
-						...config.headers,
-						Authorization:
-							getLocalStorageItem("accessToken") ??
-							`Bearer ${process.env.AUTH0_MANAGEMENT_API_TOKEN}`
-					}) as AxiosHeaders
-				}
+				config.headers = (<Record<string, unknown>>{
+					...config.headers
+				}) as AxiosHeaders
+				this.isAuthRequired &&
+					(config.headers.Authorization =
+						getLocalStorageItem("accessToken") ??
+						`Bearer ${process.env.AUTH0_MANAGEMENT_API_TOKEN}`)
 				return config
 			}
 		)

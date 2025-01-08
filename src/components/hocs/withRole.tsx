@@ -17,7 +17,7 @@ export interface UserSession extends Session {
 		sub: string
 	}
 }
-const axiosLib = new AxiosLib(true)
+const axiosLib = new AxiosLib()
 export default function withRole(Component: NextPage, { role }: WithRoleProps) {
 	return async function RoleBasedComponent(
 		props: React.ComponentProps<typeof Component>
@@ -34,7 +34,7 @@ export default function withRole(Component: NextPage, { role }: WithRoleProps) {
 			)
 			roles = response?.data
 		} catch (error) {
-			if ((error as AxiosError)?.status) {
+			if ((error as AxiosError)?.status === 401) {
 				await redirectToUrl("/profile/unauth")
 				return
 			}
