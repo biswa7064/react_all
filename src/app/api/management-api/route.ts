@@ -1,10 +1,9 @@
 // M2M access token using endpoint
 import { AxiosLib } from "@/lib/axios.lib"
-import type { NextApiRequest } from "next"
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 
 const axiosInstance = new AxiosLib()
-export async function GET(_req: NextApiRequest) {
+export async function GET(_req: NextRequest) {
 	try {
 		const response = await axiosInstance.post(
 			`https://dev-cdv32mus7iljpox6.us.auth0.com/oauth/token`,
