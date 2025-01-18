@@ -18,12 +18,17 @@ const customJestConfig = {
 		// Use babel-jest to transpile tests with the next/babel preset
 		"^.+\\.(js|jsx|ts|tsx)$": ["babel-jest", { presets: ["next/babel"] }]
 	},
+	transformIgnorePatterns: [
+		"/node_modules/(?!(@auth0/nextjs-auth0|@panva|jose|@babel/runtime)/)"
+	],
 	coveragePathIgnorePatterns: [
 		"<rootDir>/node_modules/",
 		"<rootDir>/.next/",
 		"<rootDir>/coverage/"
 	],
-	testMatch: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"]
+	testMatch: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
+	moduleDirectories: ["node_modules", "<rootDir>/"],
+	testPathIgnorePatterns: ["<rootDir>/.next/", "<rootDir>/node_modules/"]
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
