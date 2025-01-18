@@ -18,5 +18,8 @@ export const getAuth0AccessToken = async (
 }
 
 export const setLocalStorageItem = (key: string, value: string) => {
-	typeof window !== "undefined" && localStorage.setItem(key, value)
+	if (typeof window !== "undefined") {
+		localStorage.setItem(key, value)
+	}
+	return null
 }
