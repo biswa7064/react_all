@@ -7,7 +7,7 @@ jest.mock("@/utils/redirectToUrl", () => ({
 describe("AdminProfileComponent", () => {
 	let spyRedirect: jest.Mock
 	beforeEach(() => {
-		jest.restoreAllMocks()
+		jest.clearAllMocks()
 		spyRedirect = redirectToUrl as jest.Mock
 	})
 	it("should render the component", () => {
