@@ -6,6 +6,7 @@ export default function ProfileButton<
 >(props: PT) {
 	return (
 		<button
+			data-testid="profile-btn-root"
 			className="mt-8 px-3 py-2 text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg shadow-lg hover:bg-gradient-to-r hover:from-blue-600 hover:to-blue-700"
 			onClick={async () =>
 				props?.url ? redirectToUrl(props?.url) : redirectToUrl("/profile")
