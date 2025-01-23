@@ -4,7 +4,10 @@ import ProfileButton from "@/components/home/ProfileButton"
 
 export default function Unauthorized() {
 	return (
-		<div className="min-h-screen flex items-center justify-center bg-gray-100">
+		<div
+			className="min-h-screen flex items-center justify-center bg-gray-100"
+			data-testid="unauth-page"
+		>
 			<div className="max-w-md w-full space-y-8 p-8 bg-white shadow-lg rounded-lg">
 				<div className="text-center">
 					<AlertCircle className="mx-auto h-12 w-12 text-red-500" />
