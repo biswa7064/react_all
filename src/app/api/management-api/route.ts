@@ -17,9 +17,7 @@ export async function GET(_req: NextRequest) {
 
 		const data = response.data
 		if (!data || !data?.access_token) {
-			throw new Error(
-				`Error fetching token: ${data.error_description || data.error}`
-			)
+			throw new Error("Error fetching token")
 		}
 		return NextResponse.json({ accessToken: data.access_token })
 	} catch (error) {
