@@ -9,7 +9,7 @@ import {
 import { NextApiRequest, NextApiResponse } from "next"
 import { NextResponse } from "next/server"
 // can use for server actions like store in localstorage,session and all.
-const afterCallback: AfterCallbackAppRoute = async (req, session) => {
+const afterCallback: AfterCallbackAppRoute = async (_req, session) => {
 	// Edit the session here
 	return session
 }
