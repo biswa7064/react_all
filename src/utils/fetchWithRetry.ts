@@ -12,7 +12,7 @@ export async function fetchWithRetry(
     const response = await fetch(input, init)
     // If not successful, throw to trigger retry
     if (!response.ok) {
-      retryable = response.status >= 500 || response.status === 429
+      retryable = response.status >= 500
       throw new Error(`HTTP error! status: ${response.status}`)
     }
 
