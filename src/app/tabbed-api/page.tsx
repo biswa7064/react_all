@@ -20,7 +20,7 @@ import {
   Tab,
   Tabs,
 } from "@mui/material"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 
 interface Photo {
   albumId: number
@@ -126,6 +126,14 @@ export default function TabbedApiPage() {
       isMount = false
     }
   }, [activeTab, updateData])
+
+  const isToShowLoadedIndicator = useMemo(() => {
+    return (
+      !loading &&
+      !error &&
+      ((photos || []).length > 0 || (posts || []).length > 0)
+    )
+  }, [photos, posts, loading, error])
 
   return (
     <div className="container mx-auto p-6 max-w-7xl">
@@ -277,7 +285,7 @@ export default function TabbedApiPage() {
       </TabPanel>
 
       {/* Stats Footer */}
-      {!loading && !error && (
+      {isToShowLoadedIndicator && (
         <div className="mt-8 text-center">
           <div className="inline-flex items-center gap-4 px-6 py-3 bg-gray-50 rounded-full">
             <div className="flex items-center gap-2 text-sm text-gray-600">

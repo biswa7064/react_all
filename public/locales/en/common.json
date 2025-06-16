@@ -1,0 +1,17 @@
+{
+  "header": {
+    "title": "Welcome to Next.js i18n!",
+    "subtitle": "Learn how to implement multilingual apps."
+  },
+  "buttons": {
+    "login": "Login",
+    "signup": "Sign Up"
+  },
+  "footer": {
+    "copyright": "© 2023 My App. All rights reserved."
+  },
+  "demo": {
+    "text": "This is a demo text in English.",
+    "items": ["Apple", "Banana", "Cherry"]
+  }
+}

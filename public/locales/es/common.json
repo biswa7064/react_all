@@ -1,0 +1,17 @@
+{
+  "header": {
+    "title": "¡Bienvenido a Next.js i18n!",
+    "subtitle": "Aprende a implementar aplicaciones multilingües."
+  },
+  "buttons": {
+    "login": "Iniciar sesión",
+    "signup": "Registrarse"
+  },
+  "footer": {
+    "copyright": "© 2023 Mi App. Todos los derechos reservados."
+  },
+  "demo": {
+    "text": "Este es un texto de demostración en español.",
+    "items": ["Manzana", "Plátano", "Cereza"]
+  }
+}
